@@ -1,6 +1,10 @@
-const express = requiere('express');
-const userRoutes = express.Router();
+const express = require('express');
+const usersController = require('../controllers/users.controller');
+const usersRoutes = express.Router();
 
-const controller = require('../controllers/users.controller');
+usersRoutes.get('/', usersController.getAllUsers);
+usersRoutes.get('/', usersController.postNewUser);
+usersRoutes.get('/:id', usersController.patchUsers);
+usersRoutes.get('/:id', usersController.deleteUsers);
 
-userRoutes.get('/', controller.getUsers);
+module.exports = usersRoutes;

@@ -1,9 +1,18 @@
-import { fetchData } from '../../utils/fetchData';
+import { URLS } from '../../constants/urls';
+import { getData } from '../../utils/api';
 
 const UserList = () => {
-	const USERS = fetchData('http://localhost:3000');
+	const USERS = getUsers(URLS.USER_API);
 
-	return USERS.map(user => <div key={user.id}></div>);
+	console.log(USERS);
+};
+
+const getUsers = async url => {
+	try {
+		return await getData(url);
+	} catch (err) {
+		console.error(err);
+	}
 };
 
 export default UserList;

@@ -1,13 +1,66 @@
-import { getData } from '../../../client/src/utils/api';
+const fsPromises = require('fs/promises');
+const path = require('path');
+const { v4 } = require('uuid');
+const filePath = path.resolve(__dirname, '../../data/users.json');
 
-const userController = {};
+const usersController = {};
 
-controller.getUsers = (res, req) => {
+usersController.getAllUsers = async (req, res) => {
   try {
-    return getData();
+    const data = await fsPromises.readFile(filePath);
+    const jsonData = await JSON.parse(data);
+    res.send(jsonData);
+  } catch (err) {
+    console.error(err);
+  }
+  res.end();
+};
+
+usersController.postNewUser = async (req, res) => {
+  const newUser = { userId: v4(), ...req.body };
+  try {
+    const data = await fsPromises.readFile(filePath);
+    const jsonData = await JSON.parse(data);
+    jsonData.push(newUser);
+    fsPromises.writeFile(filePath, JSON.stringify(jsonData));
+    res.send(jsonData);
+  } catch (err) {
+    console.error(err);
+  }
+  res.end();
+};
+
+usersController.patchUsers = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const data = await fsPromises.readFile(filePath);
+    const jsonData = await JSON.parse(data);
+
+    const updateUsers = jsonData.map(user => {
+      if (user.userId === id) {
+        return { ...user, ...req.body };
+      }
+    });
+
+    fsPromises.writeFile(filePath, JSON.stringify(updateUsers));
+    res.send(updateUsers);
   } catch (err) {
     console.error(err);
   }
 };
 
-module.exports = userController;
+usersController.deleteUsers = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const data = await fsPromises.readFile(filePath);
+    const jsonData = await JSON.parse(data);
+
+    const updateUsers = jsonData.filter(user => user.userId !== id);
+    fsPromises.writeFile(filePath, JSON.stringify(jsonData));
+    res.send(updateUsers);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+module.exports = usersController;
