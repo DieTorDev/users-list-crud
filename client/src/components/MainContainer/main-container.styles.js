@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 const SytledMainContainer = styled.main`
-	max-width: 700px;
+	max-width: 800px;
 	margin: auto;
 	margin-top: 40px;
 	display: flex;
 	flex-direction: column;
-	background-color: white;
+	background-color: transparent;
 	padding: 16px;
 `;
 
