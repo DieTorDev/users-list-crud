@@ -1,19 +1,56 @@
-import { StyledForm } from './new-user-form.styles';
+import { URLS } from '../../constants/urls';
+import { postData } from '../../utils/api';
+import {
+	StyledForm,
+	StyledFormInput,
+	StyledFormSubmit
+} from './new-user-form.styles';
 
-const NewUserForm = () => {
+const NewUserForm = ({ setUsers, newUser, setNewUser, setNewUserMenu }) => {
+	console.log(newUser);
 	return (
-		<StyledForm>
-			<input type='text' placeholder='Name' />
-			<input type='text' placeholder='@UserName' />
+		<StyledForm
+			onSubmit={e => handleSubmit(e, setUsers, newUser, setNewUserMenu)}
+		>
+			<StyledFormInput
+				onChange={e => setNewUser({ ...newUser, name: e.target.value })}
+				type='text'
+				placeholder='Name'
+			/>
+			<StyledFormInput
+				onChange={e => setNewUser({ ...newUser, nick: e.target.value })}
+				type='text'
+				placeholder='Username'
+			/>
 			<div>
-				<label htmlFor='man'>Man</label>
-				<input type='radio' name='man' />
-				<label htmlFor='woman'>Woman</label>
-				<input type='radio' name='woman' />
+				<input
+					onChange={() => setNewUser({ ...newUser, gender: true })}
+					type='radio'
+					name='gender'
+				/>
+				<label>Man</label>
+				<input
+					onChange={() => setNewUser({ ...newUser, gender: false })}
+					type='radio'
+					name='gender'
+				/>
+				<label>Woman</label>
 			</div>
-			<input type='submit' value='Create' />
+
+			<StyledFormSubmit type='submit' value='CREATE USER' />
 		</StyledForm>
 	);
+};
+
+const handleSubmit = async (event, setUsers, newUser, setNewUserMenu) => {
+	event.preventDefault();
+	try {
+		const data = await postData(URLS.USER_API, newUser);
+		console.log(data);
+	} catch (err) {
+		console.error(err);
+	}
+	setNewUserMenu(false);
 };
 
 export default NewUserForm;

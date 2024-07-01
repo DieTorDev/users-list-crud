@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { URLS } from '../../constants/urls';
 import { getData } from '../../utils/api';
 import {
@@ -11,9 +11,7 @@ import {
 	StyledUserNick
 } from './users-list.styles';
 
-const UsersList = () => {
-	const [users, setUsers] = useState([]);
-
+const UsersList = ({ users, setUsers }) => {
 	useEffect(() => {
 		getUsers(setUsers);
 	}, []);

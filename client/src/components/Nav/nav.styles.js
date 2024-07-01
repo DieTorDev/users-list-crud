@@ -6,6 +6,28 @@ const StyledNav = styled.nav`
 	margin-block: 30px;
 `;
 
+const StyledSearchContainer = styled.div`
+	height: 30px;
+	width: 300px;
+	background-color: white;
+	border-radius: 4px;
+	display: flex;
+	justify-content: space-between;
+	padding-left: 4px;
+`;
+
+const StyledSearch = styled.input`
+	width: 100%;
+	font-family: 'Roboto', sans-serif;
+	border: none;
+
+	&::placeholder {
+		color: #d8d8d8;
+		font-family: 'Roboto', sans-serif;
+		letter-spacing: 0.5px;
+	}
+`;
+
 const StyledButton = styled.button`
 	border: none;
 	border-radius: 4px;
@@ -18,4 +40,4 @@ const StyledButton = styled.button`
 	cursor: pointer;
 `;
 
-export { StyledNav, StyledButton };
+export { StyledNav, StyledSearchContainer, StyledSearch, StyledButton };

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const StyledUserList = styled.section`
 	width: 100%;
 	display: grid;
+	align-self: center;
 	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 	gap: 16px;
 `;
@@ -21,7 +22,7 @@ const StyledUser = styled.article`
 `;
 
 const StyledUserImg = styled.div`
-	width: 100px;
+	width: 90px;
 	border-radius: 50%;
 	border: 1px solid lightgray;
 	overflow: hidden;
@@ -42,7 +43,7 @@ const StyledUserName = styled.p`
 `;
 
 const StyledUserNick = styled.p`
-	font-size: 8px;
+	font-size: 10px;
 	color: gray;
 	margin: 0;
 `;
