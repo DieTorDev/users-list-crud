@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { URLS } from '../../constants/urls';
-import { getData } from '../../utils/api';
+import { deleteData, getData } from '../../utils/api';
 import {
 	StyledActionContainer,
+	StyledIcon,
 	StyledUser,
 	StyledUserImg,
 	StyledUserList,
@@ -11,7 +12,13 @@ import {
 	StyledUserNick
 } from './users-list.styles';
 
-const UsersList = ({ users, setUsers }) => {
+const UsersList = ({
+	users,
+	setUsers,
+	editUserMenu,
+	setEditUserMenu,
+	setEditUser
+}) => {
 	useEffect(() => {
 		getUsers(setUsers);
 	}, []);
@@ -22,7 +29,7 @@ const UsersList = ({ users, setUsers }) => {
 				<StyledUser key={user.userId}>
 					<StyledUserImg>
 						<img
-							src={`https://randomuser.me/api/portraits/men/${i}.jpg`}
+							src={`https://randomuser.me/api/portraits/${user.gender ? 'men' : 'women'}/${i}.jpg`}
 							alt={user.name}
 						/>
 					</StyledUserImg>
@@ -32,8 +39,18 @@ const UsersList = ({ users, setUsers }) => {
 						<StyledUserNick>@{user.nick}</StyledUserNick>
 					</StyledUserNameContainer>
 					<StyledActionContainer>
-						<img src='/images/delete-icon.svg' alt='' />
-						<img src='/images/edit-icon.svg' alt='' />
+						<StyledIcon
+							onClick={() => deleteUsers(setUsers, user.userId)}
+							src='/images/delete-icon.svg'
+							alt=''
+						/>
+						<StyledIcon
+							onClick={() =>
+								handleEdit(editUserMenu, setEditUserMenu, setEditUser, user)
+							}
+							src='/images/edit-icon.svg'
+							alt=''
+						/>
 					</StyledActionContainer>
 				</StyledUser>
 			))}
@@ -48,6 +65,20 @@ const getUsers = async setUsers => {
 	} catch (err) {
 		console.error(err);
 	}
+};
+
+const deleteUsers = async (setUsers, user) => {
+	try {
+		const users = await deleteData(`${URLS.USER_API}${user.userId}`);
+		setUsers(users);
+	} catch (err) {
+		console.error(err);
+	}
+};
+
+const handleEdit = (editUserMenu, setEditUserMenu, setEditUser, user) => {
+	setEditUserMenu(!editUserMenu);
+	setEditUser(user);
 };
 
 export default UsersList;

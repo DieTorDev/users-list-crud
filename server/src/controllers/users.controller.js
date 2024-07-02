@@ -18,6 +18,7 @@ usersController.getAllUsers = async (req, res) => {
 
 usersController.postNewUser = async (req, res) => {
   const newUser = { userId: v4(), ...req.body };
+  console.log(req.body);
   try {
     const data = await fsPromises.readFile(filePath);
     const jsonData = await JSON.parse(data);
@@ -40,6 +41,7 @@ usersController.patchUsers = async (req, res) => {
       if (user.userId === id) {
         return { ...user, ...req.body };
       }
+      return user;
     });
 
     fsPromises.writeFile(filePath, JSON.stringify(updateUsers));
@@ -56,7 +58,7 @@ usersController.deleteUsers = async (req, res) => {
     const jsonData = await JSON.parse(data);
 
     const updateUsers = jsonData.filter(user => user.userId !== id);
-    fsPromises.writeFile(filePath, JSON.stringify(jsonData));
+    fsPromises.writeFile(filePath, JSON.stringify(updateUsers));
     res.send(updateUsers);
   } catch (err) {
     console.error(err);

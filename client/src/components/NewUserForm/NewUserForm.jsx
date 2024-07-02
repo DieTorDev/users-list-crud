@@ -7,7 +7,6 @@ import {
 } from './new-user-form.styles';
 
 const NewUserForm = ({ setUsers, newUser, setNewUser, setNewUserMenu }) => {
-	console.log(newUser);
 	return (
 		<StyledForm
 			onSubmit={e => handleSubmit(e, setUsers, newUser, setNewUserMenu)}
@@ -46,7 +45,7 @@ const handleSubmit = async (event, setUsers, newUser, setNewUserMenu) => {
 	event.preventDefault();
 	try {
 		const data = await postData(URLS.USER_API, newUser);
-		console.log(data);
+		setUsers(data);
 	} catch (err) {
 		console.error(err);
 	}

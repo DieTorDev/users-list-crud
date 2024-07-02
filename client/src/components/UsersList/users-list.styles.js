@@ -50,6 +50,11 @@ const StyledUserNick = styled.p`
 
 const StyledActionContainer = styled.div`
 	display: flex;
+	gap: 0.3rem;
+`;
+
+const StyledIcon = styled.img`
+	cursor: pointer;
 `;
 
 export {
@@ -59,5 +64,6 @@ export {
 	StyledUserName,
 	StyledUserNick,
 	StyledUserImg,
-	StyledActionContainer
+	StyledActionContainer,
+	StyledIcon
 };
